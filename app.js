@@ -4,12 +4,10 @@ const data= [
     {gene: 'Gene3', expression: 30}
 ];
 
-//dimension margins
 const margin= {top: 20, right: 30, bottom: 40, left: 20};
 const width= 500- margin.left- margin.right;
 const height= 300- margin.top-margin.bottom;
 
-//SVG container
 const svg= d3.select("#Visualization")
     .append("svg")
     .attr("width", width+ margin.left+ margin.right)
@@ -17,7 +15,6 @@ const svg= d3.select("#Visualization")
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
     
-//create scale
 const x= d3.scaleBand()
     .domain(data.map(d=> d.expression))
     .range([0, width])
@@ -28,7 +25,6 @@ const y= d3.scaleLinear()
     .nice()
     .range([height, 0]);
 
-//add bars
 svg.selectAll(".bar")
     .data(data)
     .enter().append("rect")
@@ -38,13 +34,11 @@ svg.selectAll(".bar")
     .attr("width", x.bandwidth())
     .attr("height", d=>height- y(d.expression));
 
-//add x-axis
 svg.append("g")
     .attr("class", "x-axis")
     .attr("transform", `translate(0, ${height})`)
     .call(d3.axisBottom(x));
     
-//add y-axis
 svg.append("g")
     .attr("class", "y-axis")
     .call(d3.axisLeft(y));
